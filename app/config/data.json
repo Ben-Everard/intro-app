@@ -1,0 +1,14 @@
+{
+  "user": [
+    {
+      "id": 1,
+      "image": "brian",
+      "style": "styles.1"
+    },
+    {
+      "id": 2,
+      "image": "brian",
+      "style": "styles.2"
+    }
+  ]
+}
