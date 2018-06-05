@@ -38,7 +38,8 @@ export default class eventCategory extends Component {
     })
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    const { params } = this.props.navigation.state;
     var dateTime = new Date(0)
     dateTime.setUTCSeconds(this.state.time);
     var year = dateTime.getUTCFullYear();
@@ -47,10 +48,6 @@ export default class eventCategory extends Component {
     this.setState({
       date: year + '/' + month + '/' + date,
     });
-  }
-
-  componentDidMount() {
-    const { params } = this.props.navigation.state;
     if (params && params.event && params.event.eventType) {
       this.setState({
         gradient: params.event.eventType,

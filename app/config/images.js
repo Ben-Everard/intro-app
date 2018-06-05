@@ -5,6 +5,7 @@ const images = {
     logo: require('../images/splashLogo.png'),
     facebookSignIn : require('../images/facebookSignIn.png')
   },
+  tabBackground: require('../images/tabBackground.png'),
   accountSetup: {
     profile: {
       female: require('../images/femaleProfile.png'),
@@ -24,6 +25,7 @@ const images = {
       small: require('../images/bgSmall.png')
     },
   },
+  temp: require('../images/brian.png'),
   events: {
     profileDetials: require('../images/eventProfile.png'),
     option: require('../images/icOptions.png'),

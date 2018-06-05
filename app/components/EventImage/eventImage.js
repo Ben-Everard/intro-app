@@ -18,7 +18,7 @@ export default class eventImage extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     if (this.props.avatar !== nextProps.avatar) {
       this.setState({
         avatar: nextProps.avatar

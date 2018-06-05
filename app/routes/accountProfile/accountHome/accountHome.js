@@ -24,7 +24,7 @@ export default class accountHome extends Component {
     }
   }
   
-  componentWillMount() {
+  componentDidMount() {
     const value = AsyncStorage.getItem('userDetails')
       .then((value) => {
         value = JSON.parse(value);
