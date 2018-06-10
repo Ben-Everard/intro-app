@@ -9,7 +9,7 @@ export default class eventLocation extends Component {
     return(
       <View style={styles.location}>
         <Text style={styles.locationName}>{this.props.name}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.props.onPress}>
           <View style={styles.directions}>
             <Image
               style={styles.locationIcon}

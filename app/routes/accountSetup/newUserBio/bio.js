@@ -1,6 +1,6 @@
 // NPM files
 import React, { Component } from 'react'; 
-import { Image, Text, TextInput, View } from 'react-native';
+import { Image, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import firebase from 'react-native-firebase';
 
 // Local files
@@ -50,30 +50,42 @@ export default class newUser extends Component {
     const { navigate } = this.props.navigation;
     const { params } = this.props.navigation.state;
     return (
-      <View style={styles.container}>
-        <StatusBar />
-        <UserHeader onPress={() => this._photoPicker} profilePic={ params.user.profilePhoto } />
-        <TextInput
-          style={styles.inputBox}
-          multiline={true}
-          editable = {true}
-          maxLength = {500}
-          onChangeText={(value) => this.setState({value})}
-          placeholder={this.state.placeHolder}
-          value={this.state.value}
-        />
-        <View style={styles.textCountBox}>
-          <Text style={styles.textCount}>{this.state.value.length}/500</Text>
+      <DismissKeyboard>
+        <View style={styles.container}>
+          <StatusBar />
+          <KeyboardAvoidingView behavior="position">
+            <UserHeader onPress={() => this._photoPicker} profilePic={ params.user.profilePhoto } />
+            <TextInput
+              style={styles.inputBox}
+              multiline={true}
+              editable = {true}
+              maxLength = {500}
+              onChangeText={(value) => this.setState({value})}
+              placeholder={this.state.placeHolder}
+              value={this.state.value}
+            />
+            <View style={styles.textCountBox}>
+              <Text style={styles.textCount}>{this.state.value.length}/500</Text>
+            </View>
+          </KeyboardAvoidingView>
+          <View style={styles.button}>
+            <Button text={'Almost there'} onPress={()=>this._profileUpdate(params, navigate)}/>
+          </View>
+          <View style={styles.paginationDots}>
+            <Image
+              style={styles.pagination}
+              source={images.accountSetup.paginationDots.threeDot} />
+          </View>
         </View>
-        <View style={styles.button}>
-          <Button text={'Almost there'} onPress={()=>this._profileUpdate(params, navigate)}/>
-        </View>
-        <View style={styles.paginationDots}>
-          <Image
-            style={styles.pagination}
-            source={images.accountSetup.paginationDots.threeDot} />
-        </View>
-      </View>
+      </DismissKeyboard>
     )
   }
+}
+
+const DismissKeyboard = ({ children }) => {
+  return(
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+      {children}
+    </TouchableWithoutFeedback>
+  )
 }

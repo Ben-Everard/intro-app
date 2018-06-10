@@ -34,6 +34,7 @@
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* introTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* introTests.m */; };
+		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2E95FE2B203C5E0F00ED78CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2E95FE2A203C5E0F00ED78CD /* GoogleService-Info.plist */; };
 		2E95FE82203C63CF00ED78CD /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E95FE7E203C63CF00ED78CD /* Bolts.framework */; };
 		2E95FE83203C63CF00ED78CD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E95FE7F203C63CF00ED78CD /* FBSDKCoreKit.framework */; };
@@ -45,7 +46,7 @@
 		8871E2D67704430787D89990 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3A2CEF44294771BFE6A214 /* libRNFirebase.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		EFE12C8E84574ED6982F09AD /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8767D952847E4F81A7F814FF /* libRCTFBSDK.a */; };
-		FC395D102E892778110AD9CB /* libPods-intro-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B353F9F9B6362E8B2C03BCA /* libPods-intro-tvOSTests.a */; };
+		FA3F61DFBB5E1DF41B9BEDA8 /* libPods-intro-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B353F9F9B6362E8B2C03BCA /* libPods-intro-tvOSTests.a */; };
 		FF71AF29D581ED53D5CAD8F2 /* libPods-introTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 824417EA0BBC161956F9656F /* libPods-introTests.a */; };
 /* End PBXBuildFile section */
 
@@ -141,75 +142,61 @@
 			remoteGlobalIDString = 3DBE0D0D1F3B181C0099AA32;
 			remoteInfo = "fishhook-tvOS";
 		};
-		2E95FE15203C5DBE00ED78CD /* PBXContainerItemProxy */ = {
+		2DF0FFDE2056DD460020B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = EBF21BDC1FC498900052F4D5;
 			remoteInfo = jsinspector;
 		};
-		2E95FE17203C5DBE00ED78CD /* PBXContainerItemProxy */ = {
+		2DF0FFE02056DD460020B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
 			remoteInfo = "jsinspector-tvOS";
 		};
-		2E95FE19203C5DBE00ED78CD /* PBXContainerItemProxy */ = {
+		2DF0FFE22056DD460020B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
 			remoteInfo = "third-party";
 		};
-		2E95FE1B203C5DBE00ED78CD /* PBXContainerItemProxy */ = {
+		2DF0FFE42056DD460020B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
 			remoteInfo = "third-party-tvOS";
 		};
-		2E95FE1D203C5DBE00ED78CD /* PBXContainerItemProxy */ = {
+		2DF0FFE62056DD460020B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
 			remoteInfo = "double-conversion";
 		};
-		2E95FE1F203C5DBE00ED78CD /* PBXContainerItemProxy */ = {
+		2DF0FFE82056DD460020B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
 		};
-		2E95FE21203C5DBE00ED78CD /* PBXContainerItemProxy */ = {
+		2DF0FFEA2056DD460020B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 9936F3131F5F2E4B0010BF04;
 			remoteInfo = privatedata;
 		};
-		2E95FE23203C5DBE00ED78CD /* PBXContainerItemProxy */ = {
+		2DF0FFEC2056DD460020B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
-		};
-		2E95FE28203C5DBF00ED78CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3836644A49BC4569AC0D12A3 /* RNFirebase.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNFirebase;
-		};
-		2E95FE7C203C622800ED78CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 73C40FBAF107455C901998C5 /* RCTFBSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
-			remoteInfo = RCTFBSDK;
 		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -442,7 +429,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC395D102E892778110AD9CB /* libPods-intro-tvOSTests.a in Frameworks */,
+				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
+				FA3F61DFBB5E1DF41B9BEDA8 /* libPods-intro-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,14 +542,14 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
-				2E95FE16203C5DBE00ED78CD /* libjsinspector.a */,
-				2E95FE18203C5DBE00ED78CD /* libjsinspector-tvOS.a */,
-				2E95FE1A203C5DBE00ED78CD /* libthird-party.a */,
-				2E95FE1C203C5DBE00ED78CD /* libthird-party.a */,
-				2E95FE1E203C5DBE00ED78CD /* libdouble-conversion.a */,
-				2E95FE20203C5DBE00ED78CD /* libdouble-conversion.a */,
-				2E95FE22203C5DBE00ED78CD /* libprivatedata.a */,
-				2E95FE24203C5DBE00ED78CD /* libprivatedata-tvOS.a */,
+				2DF0FFDF2056DD460020B375 /* libjsinspector.a */,
+				2DF0FFE12056DD460020B375 /* libjsinspector-tvOS.a */,
+				2DF0FFE32056DD460020B375 /* libthird-party.a */,
+				2DF0FFE52056DD460020B375 /* libthird-party.a */,
+				2DF0FFE72056DD460020B375 /* libdouble-conversion.a */,
+				2DF0FFE92056DD460020B375 /* libdouble-conversion.a */,
+				2DF0FFEB2056DD460020B375 /* libprivatedata.a */,
+				2DF0FFED2056DD460020B375 /* libprivatedata-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -593,7 +581,6 @@
 		2E95FE25203C5DBF00ED78CD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2E95FE29203C5DBF00ED78CD /* libRNFirebase.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -601,7 +588,6 @@
 		2E95FE79203C622800ED78CD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2E95FE7D203C622800ED78CD /* libRCTFBSDK.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -714,8 +700,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				8D093F96DE2A6485F7243681 /* [CP] Embed Pods Frameworks */,
-				C4FC51480CB58D455D5459AD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -736,7 +720,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				AC9400325F60AD6BB5FF22B6 /* [CP] Embed Pods Frameworks */,
 				F15C665044E2238854EFD1D9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -774,8 +757,6 @@
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
-				BDC2245FBF0525162082FA99 /* [CP] Embed Pods Frameworks */,
-				58D2B1AA4F87F4928FA94210 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -968,74 +949,60 @@
 			remoteRef = 2D16E6851FA4F8DC00B85C8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2E95FE16203C5DBE00ED78CD /* libjsinspector.a */ = {
+		2DF0FFDF2056DD460020B375 /* libjsinspector.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libjsinspector.a;
-			remoteRef = 2E95FE15203C5DBE00ED78CD /* PBXContainerItemProxy */;
+			remoteRef = 2DF0FFDE2056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2E95FE18203C5DBE00ED78CD /* libjsinspector-tvOS.a */ = {
+		2DF0FFE12056DD460020B375 /* libjsinspector-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libjsinspector-tvOS.a";
-			remoteRef = 2E95FE17203C5DBE00ED78CD /* PBXContainerItemProxy */;
+			remoteRef = 2DF0FFE02056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2E95FE1A203C5DBE00ED78CD /* libthird-party.a */ = {
+		2DF0FFE32056DD460020B375 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libthird-party.a";
-			remoteRef = 2E95FE19203C5DBE00ED78CD /* PBXContainerItemProxy */;
+			remoteRef = 2DF0FFE22056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2E95FE1C203C5DBE00ED78CD /* libthird-party.a */ = {
+		2DF0FFE52056DD460020B375 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libthird-party.a";
-			remoteRef = 2E95FE1B203C5DBE00ED78CD /* PBXContainerItemProxy */;
+			remoteRef = 2DF0FFE42056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2E95FE1E203C5DBE00ED78CD /* libdouble-conversion.a */ = {
+		2DF0FFE72056DD460020B375 /* libdouble-conversion.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
-			remoteRef = 2E95FE1D203C5DBE00ED78CD /* PBXContainerItemProxy */;
+			remoteRef = 2DF0FFE62056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2E95FE20203C5DBE00ED78CD /* libdouble-conversion.a */ = {
+		2DF0FFE92056DD460020B375 /* libdouble-conversion.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
-			remoteRef = 2E95FE1F203C5DBE00ED78CD /* PBXContainerItemProxy */;
+			remoteRef = 2DF0FFE82056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2E95FE22203C5DBE00ED78CD /* libprivatedata.a */ = {
+		2DF0FFEB2056DD460020B375 /* libprivatedata.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libprivatedata.a;
-			remoteRef = 2E95FE21203C5DBE00ED78CD /* PBXContainerItemProxy */;
+			remoteRef = 2DF0FFEA2056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2E95FE24203C5DBE00ED78CD /* libprivatedata-tvOS.a */ = {
+		2DF0FFED2056DD460020B375 /* libprivatedata-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
-			remoteRef = 2E95FE23203C5DBE00ED78CD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2E95FE29203C5DBF00ED78CD /* libRNFirebase.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNFirebase.a;
-			remoteRef = 2E95FE28203C5DBF00ED78CD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2E95FE7D203C622800ED78CD /* libRCTFBSDK.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTFBSDK.a;
-			remoteRef = 2E95FE7C203C622800ED78CD /* PBXContainerItemProxy */;
+			remoteRef = 2DF0FFEC2056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
@@ -1229,81 +1196,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		58D2B1AA4F87F4928FA94210 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-intro-tvOSTests/Pods-intro-tvOSTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8D093F96DE2A6485F7243681 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-introTests/Pods-introTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AC9400325F60AD6BB5FF22B6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-intro/Pods-intro-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BDC2245FBF0525162082FA99 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-intro-tvOSTests/Pods-intro-tvOSTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C4FC51480CB58D455D5459AD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-introTests/Pods-introTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		F15C665044E2238854EFD1D9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

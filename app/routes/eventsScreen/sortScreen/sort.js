@@ -11,7 +11,7 @@ import CustomMarker from './customMarker.js';
 import images from '../../../config/images.js';
 
 import StatusBar from '../../../components/StatusBar';
-// import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 export default class SortScreen extends Component {
     constructor(props) {
@@ -38,7 +38,7 @@ export default class SortScreen extends Component {
           />
           <View style={styles.sliderView}>
             <View style={styles.slider}>
-              <Text style={styles.sliderText}>Distance</Text>
+              <Text style={styles.sliderText}>DISTANCE</Text>
               <Text>32km</Text>
             </View>
             <View>
@@ -54,7 +54,7 @@ export default class SortScreen extends Component {
           </View>
           <View style={styles.sliderView}>
             <View style={styles.slider}>
-              <Text style={styles.sliderText}>Number of People</Text>
+              <Text style={styles.sliderText}>NUMBER OF PEOPLE</Text>
               <Text>2-4</Text>
             </View>
             <View>
@@ -72,7 +72,7 @@ export default class SortScreen extends Component {
           </View>
           <View style={styles.sliderView}>
             <View style={styles.slider}>
-              <Text style={styles.sliderText}>Time</Text>
+              <Text style={styles.sliderText}>TIME</Text>
               <Text>Now-5D</Text>
             </View>
             <View>

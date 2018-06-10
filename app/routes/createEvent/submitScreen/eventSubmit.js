@@ -87,7 +87,7 @@ export default class eventSubmit extends Component {
     })
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { params } = this.props.navigation.state;
 
     let imageTotal = 0;
@@ -126,9 +126,6 @@ export default class eventSubmit extends Component {
       .then((url) => {
         this.setState({imgSource: url});
     });
-  }
-
-  componentDidMount() {
     AsyncStorage.getItem('userDetails')
       .then((value) => {
         value = JSON.parse(value);

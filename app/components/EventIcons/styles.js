@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignItems: 'center',
-    marginLeft: 10,
     marginBottom: 8
   },
   location: {
@@ -20,6 +19,11 @@ const styles = StyleSheet.create({
   },
   Text: {
     fontSize: 10
+  },
+  imageText: {
+    flexDirection:'column',
+    alignItems:'center',
+    justifyContent:'center',
   }
 });
 

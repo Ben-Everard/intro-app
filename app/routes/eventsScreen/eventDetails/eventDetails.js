@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; 
-import { Dimensions, Modal, Text, TouchableHighlight, View } from 'react-native';
+import { Dimensions, Linking, Modal, Text, TouchableHighlight, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { tConvert, distanceFinder } from '../../../config/globalFunctions.js';
 
@@ -33,8 +33,13 @@ export default class eventDetails extends Component {
     }
   }
 
-  componentWillMount() {
-    const {params} = this.props.navigation.state;
+  componentDidMount() {
+    const { params } = this.props.navigation.state;
+    let currentId = firebase.auth().currentUser.uid;
+    let db = firebase.firestore();
+    let fieldPath = firebase.firestore.FieldPath;
+    let pathCreated = new fieldPath('created', params.eventId)
+    let pathMember = new fieldPath('joined', params.eventId)
 
     //Open spots
     let totalSpots = params.event.openSpots;
@@ -50,15 +55,6 @@ export default class eventDetails extends Component {
       spotsLeft: spotsLeft,
       time: tConvert(hours + ':' + minutes),
     });
-  }
-
-  componentDidMount() {
-    const { params } = this.props.navigation.state;
-    let currentId = firebase.auth().currentUser.uid;
-    let db = firebase.firestore();
-    let fieldPath = firebase.firestore.FieldPath;
-    let pathCreated = new fieldPath('created', params.eventId)
-    let pathMember = new fieldPath('joined', params.eventId)
     
     db.collection('users').where(pathCreated, '==', params.eventId).get().then(docs => {
       if ((docs._docs).length > 0) {
@@ -144,6 +140,19 @@ export default class eventDetails extends Component {
     })
   }
 
+  _maps(params) {
+    console.log(params);
+    let url = params.event.place.mapLocation
+    Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        return Linking.openURL(url);
+      }
+    }).catch(err => console.error('An error occurred', err));
+    
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     const { params } = this.props.navigation.state;
@@ -190,12 +199,12 @@ export default class eventDetails extends Component {
         <View style={styles.fullDescription}>
           <Title title={params.event.event}/>
           <View style={styles.iconsMargin}>
-            <EventIcons  style={styles.iconsMargin} people={this.state.spotsLeft} eventType={params.event.eventType} time={this.state.time} currentLat={params.states.currentLat} currentLong={params.states.currentLong} destinationLat={params.event.place.geo.lat} destinationLong={params.event.place.geo.long}/>
+            <EventIcons style={styles.iconsMargin} people={this.state.spotsLeft} eventType={params.event.eventType} time={this.state.time} currentLat={params.states.currentLat} currentLong={params.states.currentLong} destinationLat={params.event.place.geo.lat} destinationLong={params.event.place.geo.long}/>
           </View>
-          <Description  style={styles.description} description={params.event.description} />
+          <Description style={styles.description} description={params.event.description} />
         </View>
         <View style={styles.mapLocation}>
-          <EventLocation name={params.event.place.name} address={params.event.place.formatedLocation} mapLocation={params.event.place.mapLocation}/>
+          <EventLocation name={params.event.place.name} address={params.event.place.formatedLocation} onPress={()=>this._maps(params)}/>
           <View style={styles.button}>
             <Button text={'Request'} onPress={()=>this._requestJoin(params)}/>
           </View>
@@ -241,7 +250,7 @@ export default class eventDetails extends Component {
               bottom: 0,
               
             }}>
-              { optionsNonMember }
+              { this.state.member ? null : optionsNonMember }
               { this.state.member ? optionsMember : null }
               { this.state.creator ? optionscreator : null }
               { optionsCancel }

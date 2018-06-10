@@ -32,6 +32,8 @@ import AccountSettings from '../routes/accountProfile/accountSettings/';
 import UpdateProfile from '../routes/accountProfile/updateProfile/';
 import AccountLegal from '../routes/accountProfile/accountLegal/';
 
+import MessageDashBoard from '../routes/messages/messageDashBoard/';
+
 export const CreateStack = StackNavigator({
   EventCalendar: {
     screen: EventCalendar,
@@ -53,6 +55,15 @@ export const CreateStack = StackNavigator({
   },
   EventSubmit: {
     screen: EventSubmit,
+    navigationOptions: { 
+      header: null,
+    },
+  }
+});
+
+export const MessageStack = StackNavigator({
+  MessageDashBoard: {
+    screen: MessageDashBoard,
     navigationOptions: { 
       header: null,
     },
@@ -121,7 +132,7 @@ export const ModalStack = StackNavigator({
 
 export const Tabs = TabNavigator({
   HomeScreen: {
-    screen: ModalStack,
+    screen: HomeScreen,
     navigationOptions:({navigation}) =>({
       tabBarIcon: ({ tintColor }) => (
         <Image
@@ -151,7 +162,7 @@ export const Tabs = TabNavigator({
     })
   },
   Message: {
-    screen: AccountStack,
+    screen: MessageStack,
     navigationOptions:({navigation}) =>({
       tabBarIcon: ({ tintColor }) => (
         <Image

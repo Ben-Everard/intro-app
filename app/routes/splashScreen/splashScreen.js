@@ -23,13 +23,13 @@ export default class SplashScreen extends Component {
               this.props.navigation.navigate('LoginScreen');
             } else {
               let data = doc.data();
-
+              console.log(data);
               // Setting up data for AsyncStorage
               let userData = {
                 userDetails: data,
                 userId: user.uid
               }
-              AsyncStorage.multiSet([['userDetails', JSON.stringify(userData.userDetails)],['userId', user.uid]]);
+              AsyncStorage.multiSet([['userId', user.uid]]);
 
               // Directing to correct page
               if (data && data.description && data.description !== '') {

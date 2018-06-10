@@ -12,7 +12,23 @@ export default class eventIcons extends Component {
       distance: 'NA'
     }
   }
-  componentWillMount() {
+
+  distanceFinder(origin, destination) {
+    return fetch('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+ origin +'&destinations='+ destination +'&key=' + GOOGLE_MATRIX)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.rows[0].elements[0] && responseJson.rows[0].elements[0].distance && responseJson.rows[0].elements[0].distance.text) {
+          this.setState({
+            distance: responseJson.rows[0].elements[0].distance.text
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  componentDidMount() {
     switch(this.props.eventType) {
       case 'Drinks':
         this.setState({
@@ -59,23 +75,6 @@ export default class eventIcons extends Component {
           eventIcon: images.createEvent.icons.black.other
         })
     }
-  }
-  distanceFinder(origin, destination) {
-    return fetch('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+ origin +'&destinations='+ destination +'&key=' + GOOGLE_MATRIX)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.rows[0].elements[0] && responseJson.rows[0].elements[0].distance && responseJson.rows[0].elements[0].distance.text) {
-          this.setState({
-            distance: responseJson.rows[0].elements[0].distance.text
-          });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  componentDidMount() {
     let origin = this.props.currentLat + ',' + this.props.currentLong;
     let destination = this.props.destinationLat + ',' + this.props.destinationLong;
     this.distanceFinder(origin, destination);
@@ -84,28 +83,28 @@ export default class eventIcons extends Component {
   render() {
     return(
       <View style={styles.icons}>
-        <View>
+        <View style={styles.imageText}>
           <Image
             style={styles.icon}
             source={images.events.icons.profile}
           />
           <Text style={styles.Text}>{this.props.people} Guest</Text>
         </View>
-        <View>
+        <View style={styles.imageText}>
           <Image
             style={styles.icon}
             source={this.state.eventIcon}
           />
           <Text style={styles.Text}>{this.props.eventType}</Text>
         </View>
-        <View>
+        <View style={styles.imageText}>
           <Image
             style={styles.icon}
             source={images.events.icons.time}
           />
           <Text style={styles.Text}>{this.props.time}</Text>
         </View>
-        <View>
+        <View style={styles.imageText}>
           <Image
             style={styles.location}
             source={images.events.icons.checkIn}
