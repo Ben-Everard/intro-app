@@ -1,15 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  requestContainer: {
-    marginRight: 20,
-    marginLeft: 20,
-    marginTop: 74
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
   eventRequest: {
     flexDirection: 'row',
     marginTop: 21
@@ -19,10 +10,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 90
   },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
   acceptDecline: {
     marginLeft: 25,
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   buttons: {
     flexDirection: 'row',
