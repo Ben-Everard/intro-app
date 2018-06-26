@@ -10,6 +10,8 @@ import {
 import { NavigationActions } from 'react-navigation';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
+import firebase from 'react-native-firebase';
+
 import styles from './styles.js';
 import images from '../../../config/images.js';
 import StatusBar from '../../../components/StatusBar/';
@@ -19,11 +21,44 @@ export default class accountSettings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: [ 22, 30 ]
+      ageRange: [ 22, 30 ],
+      sound: false,
+      notifications: true,
+      calendar: false
     }
   }
 
+  changeSound = (value) => {
+    this.setState({sound: value});
+  }
+
+  changeNotifications = (value) => {
+    this.setState({notifications: value});
+    
+  }
+
+  changeCalendar = (value) => {
+    this.setState({calendar: value});
+    
+  }
+
+  multiSliderValuesChange = (value) => {
+    this.setState({ageRange: value});
+    
+  }
+
+  saveSettings() {
+    let db = firebase.firestore();
+    let currentId = firebase.auth().currentUser.uid;
+    db.collection('users').doc(currentId).update({
+      settings: this.state
+    })
+  }
+
+
+
   render() {
+    this.saveSettings()
     const backAction = NavigationActions.back({
       key: null
     })
@@ -34,13 +69,13 @@ export default class accountSettings extends Component {
         <View style={styles.ageSection}>
           <View style={styles.ageSettings}>
             <Text>Age</Text>
-            <Text>{this.state.values[0]} - {this.state.values[1]}</Text>
+            <Text>{this.state.ageRange[0]} - {this.state.ageRange[1]}</Text>
           </View>
           <View style={styles.ageSlider}>
             <MultiSlider
-              values={[this.state.values[0], this.state.values[1]]}
+              values={[this.state.ageRange[0], this.state.ageRange[1]]}
               sliderLength={309}
-              onValuesChange={this.multiSliderValuesChange}
+              onValuesChangeFinish={this.multiSliderValuesChange}
               min={18}
               max={50}
               step={1} 
@@ -51,15 +86,24 @@ export default class accountSettings extends Component {
         </View>
         <View style={styles.settingRow}>
           <Text>Push notifications</Text>
-          <Switch />
+          <Switch 
+            value={this.state.notifications}
+            onValueChange={this.changeNotifications}
+          />
         </View>
         <View style={styles.settingRow}>
           <Text>App sounds / Vibration</Text>
-          <Switch />
+          <Switch 
+            value={this.state.sound}
+            onValueChange={this.changeSound}
+          />
         </View>
         <View style={styles.settingRow}>
           <Text>Auto add to calendar</Text>
-          <Switch />
+          <Switch 
+            value={this.state.calendar}
+            onValueChange={this.changeCalendar}
+          />
         </View>
         <TouchableOpacity onPress={()=>navigate('AccountLegal', {text: 'Terms of Service', tos: true})}>
           <View style={styles.settingRow}>
