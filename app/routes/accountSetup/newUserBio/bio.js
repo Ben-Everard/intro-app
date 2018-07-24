@@ -26,10 +26,18 @@ export default class newUser extends Component {
       planSpontaneous: params.personality.planSpontaneous,
       uid: params.user.uid,
       age: params.user.age,
+      disabled: true
     };
   }
 
-  _profileUpdate( params, navigate) {
+  _textChange( value ) {
+    this.setState({
+      value,
+      disabled: false
+    })
+  }
+
+  _profileUpdate( params, navigate ) {
     let db = firebase.firestore();
     let userRef = db.collection('users').doc(params.id);
 
@@ -41,7 +49,8 @@ export default class newUser extends Component {
         introExtro: this.state.introExtro,
         planSpontaneous: this.state.planSpontaneous,
         indoorOutdoor: this.state.indoorOutdoor
-      }
+      },
+      profileSet: true
     });
     this.props.navigation.navigate('NewUserInsta', {description: this.state.value, user: params.user, id: params.id});
   }
@@ -60,7 +69,7 @@ export default class newUser extends Component {
               multiline={true}
               editable = {true}
               maxLength = {500}
-              onChangeText={(value) => this.setState({value})}
+              onChangeText={(value) => this._textChange(value)}
               placeholder={this.state.placeHolder}
               value={this.state.value}
             />
@@ -69,7 +78,7 @@ export default class newUser extends Component {
             </View>
           </KeyboardAvoidingView>
           <View style={styles.button}>
-            <Button text={'Almost there'} onPress={()=>this._profileUpdate(params, navigate)}/>
+            <Button text={'Almost there'} onPress={()=>this._profileUpdate(params, navigate)} disabled={this.state.disabled}/>
           </View>
           <View style={styles.paginationDots}>
             <Image

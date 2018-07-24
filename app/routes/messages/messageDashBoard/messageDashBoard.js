@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { FlatList ,Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import styles from './styles.js';
 
 import firebase from 'react-native-firebase';
 
 import StatusBar from '../../../components/StatusBar';
 import PendingRequest from '../../../components/PendingRequests';
-import AllChats from '../../../components/AllChats';
+import Chat from './chat/chat.js';
 
 
 export default class MessageDasahBoard extends Component {
@@ -62,6 +62,7 @@ export default class MessageDasahBoard extends Component {
             }
           }
           count++;
+          console.log(Object.keys(created).length);
           if (Object.keys(created).length === count && pendingCount === 0) {
             self.setState({
               data: events,
@@ -93,7 +94,7 @@ export default class MessageDasahBoard extends Component {
               <PendingRequest key={person.eventId} eventData={person}/>
             ))}
           </View>
-          <AllChats />
+          <Chat />
         </View>
       )
     }

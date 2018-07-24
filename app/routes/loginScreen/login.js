@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { AsyncStorage, Button, Image, Text, TouchableHighlight, View } from 'react-native';
 import FBSDK, { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk'
 import firebase from 'react-native-firebase';
+import { NavigationActions } from 'react-navigation';
 
 //Local Files
 import images from '../../config/images.js';
@@ -47,32 +48,56 @@ export default class LoginScreen extends Component {
                   }
 
                   firebase.auth().onAuthStateChanged((user) => {
-                    this.setState=({
-                      uid: user.uid,
-                    });
-
-                    let db = firebase.firestore();
-                    let docRef = db.collection('users').doc(user.uid);
                     if (user) {
-                      let data = {
-                        name: result.first_name,
-                        email: result.email,
-                        fullName: result.name,
-                        description: '',
-                        age: this.state.age,
-                        ageRange: result.age_range.min,
-                        profilePhoto: 'https://graph.facebook.com/' + result.id + '/picture?type=large',
-                        gender: result.gender,
-                      }
+                      this.setState=({
+                        uid: user._user.uid,
+                      });
 
-                      let userData = {
-                        userDetails: data,
-                        userId: user.uid
-                      }
-                      AsyncStorage.multiSet([['userDetails', JSON.stringify(userData.userDetails)],['userId', user.uid]]);
-                      
-                      docRef.set(data);
-                      this.props.navigation.navigate('AccountSetup', {user: userData});
+                      let db = firebase.firestore();
+                      let docRef = db.collection('users').doc(user._user.uid);
+                      docRef.get().then(doc => {
+                        console.log(doc);
+                        if (!doc.exists) {
+                          let data = {
+                            name: result.first_name,
+                            email: result.email,
+                            fullName: result.name,
+                            description: '',
+                            age: this.state.age,
+                            ageRange: result.age_range.min,
+                            profilePhoto: 'https://graph.facebook.com/' + result.id + '/picture?type=large',
+                            gender: result.gender,
+                          }
+                          let userData = {
+                            userDetails: data,
+                            userId: user.uid
+                          }
+                          AsyncStorage.multiSet([['userDetails', JSON.stringify(userData.userDetails)],['userId', user.uid]]);
+                          docRef.set(data);
+                          this.props.navigation.navigate('AccountSetup', {user: userData});
+                        } else {
+                          let data = doc.data();
+                          // Setting up data for AsyncStorage
+                          let userData = {
+                            userDetails: data,
+                            userId: user.uid
+                          }
+
+                          AsyncStorage.multiSet([['userDetails', JSON.stringify(userData.userDetails)],['userId', user.uid]]);
+
+                          // Directing to correct page
+                          if (data && data.profileSet) {
+                            console.log(data);
+                            this.props.navigation.navigate('HomeScreen', {user: userData});
+                          } else {
+                            this.props.navigation.navigate('AccountSetup', {user: userData});
+                          }
+                          return doc.data();
+                        }
+                      })
+                      .catch(err => {
+                        console.log('Error getting document', err);
+                      })
                     }
                   }, (error) => {
                       console.log(error);

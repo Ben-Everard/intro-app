@@ -36,13 +36,13 @@
 #import "Firestore/Source/Model/FSTMutation.h"
 #import "Firestore/Source/Model/FSTMutationBatch.h"
 #import "Firestore/Source/Remote/FSTRemoteEvent.h"
-#import "Firestore/Source/Util/FSTAssert.h"
-#import "Firestore/Source/Util/FSTLogger.h"
 
 #include "Firestore/core/src/firebase/firestore/auth/user.h"
 #include "Firestore/core/src/firebase/firestore/core/target_id_generator.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 #include "Firestore/core/src/firebase/firestore/model/snapshot_version.h"
+#include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
+#include "Firestore/core/src/firebase/firestore/util/log.h"
 
 using firebase::firestore::auth::User;
 using firebase::firestore::core::TargetIdGenerator;
@@ -236,10 +236,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (FSTMaybeDocumentDictionary *)rejectBatchID:(FSTBatchID)batchID {
   return self.persistence.run("Reject batch", [&]() -> FSTMaybeDocumentDictionary * {
     FSTMutationBatch *toReject = [self.mutationQueue lookupMutationBatch:batchID];
-    FSTAssert(toReject, @"Attempt to reject nonexistent batch!");
+    HARD_ASSERT(toReject, "Attempt to reject nonexistent batch!");
 
     FSTBatchID lastAcked = [self.mutationQueue highestAcknowledgedBatchID];
-    FSTAssert(batchID > lastAcked, @"Acknowledged batches can't be rejected.");
+    HARD_ASSERT(batchID > lastAcked, "Acknowledged batches can't be rejected.");
 
     DocumentKeySet affected = [self removeMutationBatch:toReject];
 
@@ -268,46 +268,32 @@ NS_ASSUME_NONNULL_BEGIN
     FSTListenSequenceNumber sequenceNumber = [self.listenSequence next];
     id<FSTQueryCache> queryCache = self.queryCache;
 
-    [remoteEvent.targetChanges enumerateKeysAndObjectsUsingBlock:^(
-                                   NSNumber *targetIDNumber, FSTTargetChange *change, BOOL *stop) {
-      FSTTargetID targetID = targetIDNumber.intValue;
+    for (const auto &entry : remoteEvent.targetChanges) {
+      FSTTargetID targetID = entry.first;
+      FSTBoxedTargetID *boxedTargetID = @(targetID);
+      FSTTargetChange *change = entry.second;
 
       // Do not ref/unref unassigned targetIDs - it may lead to leaks.
-      FSTQueryData *queryData = self.targetIDs[targetIDNumber];
+      FSTQueryData *queryData = self.targetIDs[boxedTargetID];
       if (!queryData) {
-        return;
+        continue;
       }
+
+      [queryCache removeMatchingKeys:change.removedDocuments forTargetID:targetID];
+      [queryCache addMatchingKeys:change.addedDocuments forTargetID:targetID];
 
       // Update the resume token if the change includes one. Don't clear any preexisting value.
       // Bump the sequence number as well, so that documents being removed now are ordered later
       // than documents that were previously removed from this target.
       NSData *resumeToken = change.resumeToken;
       if (resumeToken.length > 0) {
-        queryData = [queryData queryDataByReplacingSnapshotVersion:change.snapshotVersion
+        queryData = [queryData queryDataByReplacingSnapshotVersion:remoteEvent.snapshotVersion
                                                        resumeToken:resumeToken
                                                     sequenceNumber:sequenceNumber];
-        self.targetIDs[targetIDNumber] = queryData;
+        self.targetIDs[boxedTargetID] = queryData;
         [self.queryCache updateQueryData:queryData];
       }
-
-      FSTTargetMapping *mapping = change.mapping;
-      if (mapping) {
-        // First make sure that all references are deleted.
-        if ([mapping isKindOfClass:[FSTResetMapping class]]) {
-          FSTResetMapping *reset = (FSTResetMapping *)mapping;
-          [queryCache removeMatchingKeysForTargetID:targetID];
-          [queryCache addMatchingKeys:reset.documents forTargetID:targetID];
-
-        } else if ([mapping isKindOfClass:[FSTUpdateMapping class]]) {
-          FSTUpdateMapping *update = (FSTUpdateMapping *)mapping;
-          [queryCache removeMatchingKeys:update.removedDocuments forTargetID:targetID];
-          [queryCache addMatchingKeys:update.addedDocuments forTargetID:targetID];
-
-        } else {
-          FSTFail(@"Unknown mapping type: %@", mapping);
-        }
-      }
-    }];
+    }
 
     // TODO(klimt): This could probably be an NSMutableDictionary.
     DocumentKeySet changedDocKeys;
@@ -324,11 +310,11 @@ NS_ASSUME_NONNULL_BEGIN
           SnapshotVersion{doc.version} >= SnapshotVersion{existingDoc.version}) {
         [self.remoteDocumentCache addEntry:doc];
       } else {
-        FSTLog(
-            @"FSTLocalStore Ignoring outdated watch update for %s. "
-             "Current version: %s  Watch version: %s",
-            key.ToString().c_str(), existingDoc.version.timestamp().ToString().c_str(),
-            doc.version.timestamp().ToString().c_str());
+        LOG_DEBUG(
+            "FSTLocalStore Ignoring outdated watch update for %s. "
+            "Current version: %s  Watch version: %s",
+            key.ToString(), existingDoc.version.timestamp().ToString(),
+            doc.version.timestamp().ToString());
       }
 
       // The document might be garbage because it was unreferenced by everything.
@@ -345,10 +331,9 @@ NS_ASSUME_NONNULL_BEGIN
     const SnapshotVersion &lastRemoteVersion = [self.queryCache lastRemoteSnapshotVersion];
     const SnapshotVersion &remoteVersion = remoteEvent.snapshotVersion;
     if (remoteVersion != SnapshotVersion::None()) {
-      FSTAssert(remoteVersion >= lastRemoteVersion,
-                @"Watch stream reverted to previous snapshot?? (%s < %s)",
-                remoteVersion.timestamp().ToString().c_str(),
-                lastRemoteVersion.timestamp().ToString().c_str());
+      HARD_ASSERT(remoteVersion >= lastRemoteVersion,
+                  "Watch stream reverted to previous snapshot?? (%s < %s)",
+                  remoteVersion.timestamp().ToString(), lastRemoteVersion.timestamp().ToString());
       [self.queryCache setLastRemoteSnapshotVersion:remoteVersion];
     }
 
@@ -369,7 +354,7 @@ NS_ASSUME_NONNULL_BEGIN
     FSTReferenceSet *localViewReferences = self.localViewReferences;
     for (FSTLocalViewChanges *view in viewChanges) {
       FSTQueryData *queryData = [self.queryCache queryDataForQuery:view.query];
-      FSTAssert(queryData, @"Local view changes contain unallocated query.");
+      HARD_ASSERT(queryData, "Local view changes contain unallocated query.");
       FSTTargetID targetID = queryData.targetID;
       for (const DocumentKey &key : view.removedKeys) {
         [self->_persistence.referenceDelegate removeReference:key target:targetID];
@@ -409,8 +394,8 @@ NS_ASSUME_NONNULL_BEGIN
   });
   // Sanity check to ensure that even when resuming a query it's not currently active.
   FSTBoxedTargetID *boxedTargetID = @(queryData.targetID);
-  FSTAssert(!self.targetIDs[boxedTargetID], @"Tried to allocate an already allocated query: %@",
-            query);
+  HARD_ASSERT(!self.targetIDs[boxedTargetID], "Tried to allocate an already allocated query: %s",
+              query);
   self.targetIDs[boxedTargetID] = queryData;
   return queryData;
 }
@@ -418,7 +403,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)releaseQuery:(FSTQuery *)query {
   self.persistence.run("Release query", [&]() {
     FSTQueryData *queryData = [self.queryCache queryDataForQuery:query];
-    FSTAssert(queryData, @"Tried to release nonexistent query: %@", query);
+    HARD_ASSERT(queryData, "Tried to release nonexistent query: %s", query);
 
     [self.localViewReferences removeReferencesForID:queryData.targetID];
     if (self.garbageCollector.isEager) {
@@ -530,14 +515,14 @@ NS_ASSUME_NONNULL_BEGIN
     FSTMaybeDocument *_Nullable doc = remoteDoc;
 
     auto ackVersionIter = versions.find(docKey);
-    FSTAssert(ackVersionIter != versions.end(),
-              @"docVersions should contain every doc in the write.");
+    HARD_ASSERT(ackVersionIter != versions.end(),
+                "docVersions should contain every doc in the write.");
     const SnapshotVersion &ackVersion = ackVersionIter->second;
     if (!doc || doc.version < ackVersion) {
       doc = [batch applyTo:doc documentKey:docKey mutationBatchResult:batchResult];
       if (!doc) {
-        FSTAssert(!remoteDoc, @"Mutation batch %@ applied to document %@ resulted in nil.", batch,
-                  remoteDoc);
+        HARD_ASSERT(!remoteDoc, "Mutation batch %s applied to document %s resulted in nil.", batch,
+                    remoteDoc);
       } else {
         [self.remoteDocumentCache addEntry:doc];
       }

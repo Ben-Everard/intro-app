@@ -15,12 +15,11 @@ export default class SplashScreen extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         let db = firebase.firestore();
-        let userRef = db.collection('users').doc(user.uid);
-
+        let userRef = db.collection('users').doc(user._user.uid);
         userRef.get()
           .then(doc => {
             if (!doc.exists) {
-              this.props.navigation.navigate('LoginScreen');
+              return this.props.navigation.navigate('LoginScreen');
             } else {
               let data = doc.data();
               // Setting up data for AsyncStorage
@@ -28,28 +27,20 @@ export default class SplashScreen extends Component {
                 userDetails: data,
                 userId: user.uid
               }
-              AsyncStorage.multiSet([['userId', user.uid]]);
-
+              AsyncStorage.multiSet([['userDetails', JSON.stringify(userData.userDetails)],['userId', user.uid]]);
               // Directing to correct page
-              if (data && data.description && data.description !== '') {
-                const resetAction = this.props.navigation.dispatch(NavigationActions.reset({
-                  index: 0,
-                  actions: [NavigationActions.navigate({ routeName: 'HomeScreen' })],
-                  key: null,
-                  otherParam: {user: userData}
-                }));
-                this.props.navigation.dispatch(resetAction);
+              if (data && data.profileSet) {
+                this.props.navigation.navigate('HomeScreen');
               } else {
                 this.props.navigation.navigate('AccountSetup', {user: userData});
               }
-              return doc.data();
             }
           })
           .catch(err => {
             console.log('Error getting document', err);
           })
       } else {
-        this.props.navigation.navigate('LoginScreen');
+        return this.props.navigation.navigate('LoginScreen');
       }
     });
   }

@@ -12,6 +12,9 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Firebase.h>
 
+@import GooglePlaces;
+@import GoogleMaps;
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -31,6 +34,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  [GMSPlacesClient provideAPIKey:@"AIzaSyAXV-KWy4tbJa_ZpAFwiB1tiyDSTBChi2U"];
   
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
