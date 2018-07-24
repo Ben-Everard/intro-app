@@ -1,3 +1,4 @@
 import AllChats from './allChats.js';
+import Chat from './chat.js';
 
-export default AllChats;
+export { AllChats, Chat };

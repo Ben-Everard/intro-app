@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import { StackActions, NavigationActions } from 'react-navigation';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import { LoginManager } from 'react-native-fbsdk';
 
 import firebase from 'react-native-firebase';
 
@@ -55,10 +56,21 @@ export default class accountSettings extends Component {
     })
   }
 
-
+  logout(action) {
+    firebase.auth().signOut();
+    LoginManager.logOut();
+    this.props.navigation.dispatch(action);
+  }
 
   render() {
-    this.saveSettings()
+    this.saveSettings();
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'SplashScreen' })
+      ],
+      key: null
+    });
     const backAction = NavigationActions.back({
       key: null
     })
@@ -118,9 +130,12 @@ export default class accountSettings extends Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
+         <TouchableOpacity onPress={()=>this.logout(resetAction)}>
           <View style={styles.settingRow}>
             <Text>Logout</Text>
+            <Image />
           </View>
+        </TouchableOpacity>
         </TouchableOpacity>
         <View style={styles.button}>
           <Button text={'Back'} onPress={()=>this.props.navigation.dispatch(backAction)}/>

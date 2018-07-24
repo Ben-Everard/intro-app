@@ -17,8 +17,16 @@ export default class newUser extends Component {
       user: params.user.userDetails,
       id: params.user.userId
     };
-
   }
+
+  componentDidMount() {
+    const { navigate } = this.props.navigation;
+    console.log(this.state.user);
+    if (!this.state.user.instagramSet && (this.state.user.description !== '') ) {
+      this.props.navigation.navigate('NewUserInsta', {description: this.state.user.description, user: this.state.user});
+    }
+  }
+
   _photoPicker() {
     ImagePickerIOS.openSelectDialog({}, imageUri => {
       this.setState({ image: imageUri });
@@ -27,7 +35,6 @@ export default class newUser extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    console.log(this.state)
     return (
       <View style={styles.container}>
         <StatusBar />
