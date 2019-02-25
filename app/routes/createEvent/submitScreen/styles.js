@@ -14,10 +14,14 @@ const styles = StyleSheet.create ({
     
   },
   iconsMargin: {
-    marginTop: 22
+    marginTop: 22,
+    marginLeft: 15,
+    marginRight: 15,
   },
-  description: {
-    marginTop: 25
+  descriptionBox: {
+    marginLeft: 50,
+    marginRight: 50,
+    marginTop: 25,
   },
   mapLocation: {
     height: 157,
@@ -40,8 +44,13 @@ const styles = StyleSheet.create ({
     marginTop: 34,
     width: 150
   },
-  title: {
-    marginTop: 33
+  locationName: {
+    alignItems: 'center',
+    fontSize: 11,
+    fontWeight: '500'
+  },
+  titleMargin: {
+    marginTop: 33,
   }
 })
 

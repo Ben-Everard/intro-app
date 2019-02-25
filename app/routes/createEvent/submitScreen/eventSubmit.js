@@ -32,31 +32,25 @@ export default class eventSubmit extends Component {
     let eventRef = db.collection('events');
     let currentId = firebase.auth().currentUser.uid;
     let eventId;
+    let state = params.allStates;
 
     eventRef.add({
-      event: params.allStates.title,
-      eventType: params.allStates.eventType,
+      event: state.title,
+      eventType: state.eventType,
       place: {
-        name: params.allStates.name,
-        address: {
-          streetNumber: params.allStates.addressComponents.addressNumber ? params.allStates.addressComponents.addressNumber.short_name : null,
-          streetName: params.allStates.addressComponents.addressStreet? params.allStates.addressComponents.addressStreet.short_name : null,
-          city: params.allStates.addressComponents.addressCity ? params.allStates.addressComponents.addressCity.short_name : null,
-          country:  params.allStates.addressComponents.addressCountry ? params.allStates.addressComponents.addressCountry.short_name : null,
-          state: params.allStates.addressComponents.addressState ?  params.allStates.addressComponents.addressState.short_name : null,
-          zipcode: params.allStates.addressComponents.addressZipcode ? params.allStates.addressComponents.addressZipcode.long_name : null,
-        },
+        name: state.name,
+        zipCode: state.zipCode,
+        placeId: state.placeId,
+        formatedLocation: state.formattedLocation,
         geo: {
-          long: params.allStates.addressGeo.long,
-          lat: params.allStates.addressGeo.lat,
+          long: state.long,
+          lat: state.lat,
         },
-        mapLocation: params.allStates.mapUrl,
-        formatedLocation: params.allStates.formattedLocation,
       },
       image: this.state.imgSource,
-      time: params.allStates.epochTime,
-      openSpots: params.allStates.people,
-      description: params.allStates.description,
+      time: state.epochTime,
+      openSpots: state.people,
+      description: state.description,
     })
     .then(ref => {
       eventId = ref.id;
@@ -89,6 +83,17 @@ export default class eventSubmit extends Component {
 
   componentDidMount() {
     const { params } = this.props.navigation.state;
+
+    navigator.geolocation.getCurrentPosition((position) => {
+        this.setState({
+          currentLat: position.coords.latitude,
+          currentLong: position.coords.longitude,
+          error: null,
+        });
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
 
     let imageTotal = 0;
     let fileNames = params.allStates.eventType;
@@ -151,17 +156,21 @@ export default class eventSubmit extends Component {
           <EventImage image={this.state.imgSource} avatar={this.state.profilePic}/>
         </View>
         <View style={styles.fullDescription}>
-          <Title style={styles.title} title={params.allStates.title}/>
-          <View style={styles.iconsMargin}>
-            <EventIcons style={styles.iconsMargin} time={params.allStates.eventTime} people={params.allStates.people} eventType={params.allStates.eventType} currentLat={params.allStates.currentLat} currentLong={params.allStates.currentLong} destinationLat={params.allStates.addressGeo.lat} destinationLong={params.allStates.addressGeo.long}/>
+          <View style={styles.titleMargin}>
+            <Title style={styles.title} title={params.allStates.title}/>
           </View>
-          <Description style={styles.description} description={params.allStates.description} />
+          <View style={styles.iconsMargin}>
+            <EventIcons style={styles.iconsMargin} time={params.allStates.eventTime} people={params.allStates.people} eventType={params.allStates.eventType} currentLat={this.state.currentLat} currentLong={this.state.currentLong} destinationLat={params.allStates.lat} destinationLong={params.allStates.long}/>
+          </View>
+          <View style={styles.descriptionBox}>
+            <Description style={styles.description} description={params.allStates.description} />
+          </View>
         </View>
         <View style={styles.mapLocation}>
-          <EventLocation address={params.allStates.formattedLocation}/>
+          <EventLocation address={params.allStates.formattedLocation} name={params.allStates.name}/>
           <View style={styles.buttons}>
             <View style={styles.editButton}>
-              <Button text={'Edit'} onPress={() => navigate('EventCalendar', {event: params.allStates})}/>
+              <Button text={'Edit'} white={'true'} onPress={() => navigate('EventCalendar', {event: params.allStates})}/>
             </View>
             <View style={styles.submitButton}>
               <Button text={'Post'} onPress={() => this._submitEvent(params, navigate)}/>

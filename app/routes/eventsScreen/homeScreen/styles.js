@@ -15,7 +15,7 @@ const styles = StyleSheet.create ({
     height: 192,
     marginTop: 16
   },
-  eventTitle: {
+  titleMargin: {
     marginTop: 14
   },
   eventDescription: {
@@ -28,8 +28,8 @@ const styles = StyleSheet.create ({
     alignItems: 'center',
     flexDirection:'column',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
     shadowRadius: 2,
     marginRight: 7,
     marginLeft: 7,

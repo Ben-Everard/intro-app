@@ -51,9 +51,10 @@ const styles = StyleSheet.create({
   },
   place: {
     fontSize: 10,
-    marginRight: 32,
+  },
+  cancelButton: {
     textAlign: 'right',
-    width: 175
+    marginRight: 32
   }
 });
 

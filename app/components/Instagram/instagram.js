@@ -14,8 +14,7 @@ export default class Instagram extends Component {
     }
   }
 
-  slides() {
-    let data = this.props.data;
+  slides(data) {
     let images = [];
     let count = 0;
     let top = [];

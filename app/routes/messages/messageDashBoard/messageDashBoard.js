@@ -90,7 +90,7 @@ export default class MessageDasahBoard extends Component {
           <StatusBar />
           <View style={styles.requestContainer}>
             <Text style={styles.title}> PENDING REQUEST </Text>
-            {data.map((person, index) => (
+            {data.length === 0 ? <Text> You have no pending Invites </Text> : data.map((person, index) => (
               <PendingRequest key={person.eventId} eventData={person}/>
             ))}
           </View>

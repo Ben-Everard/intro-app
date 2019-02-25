@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
   },
   directions: {
     flexDirection: 'row',
+    marginRight: 50,
+    marginLeft: 50,
   }
 });
 

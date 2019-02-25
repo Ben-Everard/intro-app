@@ -39,7 +39,7 @@ const styles = StyleSheet.create ({
     borderWidth: 2,
     borderColor: '#FFF',
     left: -35,
-    zIndex: 80
+    zIndex: 70
   },
   3: {
     width: 40,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create ({
     borderWidth: 2,
     borderColor: '#FFF',
     left: -35,
-    zIndex: 80
+    zIndex: 60
   },
   4: {
     width: 40,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create ({
     borderWidth: 2,
     borderColor: '#FFF',
     left: -35,
-    zIndex: 80
+    zIndex: 50
   },
   5: {
     width: 40,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create ({
     borderWidth: 2,
     borderColor: '#FFF',
     left: -35,
-    zIndex: 80
+    zIndex: 40
   },
   6: {
     width: 40,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create ({
     borderWidth: 2,
     borderColor: '#FFF',
     left: -35,
-    zIndex: 80
+    zIndex: 30
   },
   7: {
     width: 40,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create ({
     borderWidth: 2,
     borderColor: '#FFF',
     left: -35,
-    zIndex: 80
+    zIndex: 20
   }
 });
 

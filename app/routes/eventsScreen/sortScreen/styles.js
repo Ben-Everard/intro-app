@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+let {height, width} = Dimensions.get('window');
+let halfWidth = width / 2;
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +24,7 @@ const styles = StyleSheet.create({
     paddingBottom: 9 
   },
   sliderView: {
-    marginBottom: 18
+    marginBottom: 14
   },
   slider: {
     flexDirection: 'row',
@@ -35,6 +38,24 @@ const styles = StyleSheet.create({
   image: {
     width: 40,
     height: 43
+  },
+  checkbox: {
+    marginBottom: 5,
+    width: halfWidth - 25,
+    height: 32,
+    marginBottom: 15,
+  },
+  checkboxLabel: {
+    fontSize: 10,
+    color: '#5C6670',
+    fontWeight: '500',
+  },
+  button: {
+    marginTop: 30,
+  },
+  checkboxArea: {
+    flexDirection: 'row', 
+    flexWrap: 'wrap',
   }
 })
 

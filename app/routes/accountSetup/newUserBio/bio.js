@@ -50,6 +50,12 @@ export default class newUser extends Component {
         planSpontaneous: this.state.planSpontaneous,
         indoorOutdoor: this.state.indoorOutdoor
       },
+      settings: {
+        ageRange: [ 22, 30 ],
+        sound: false,
+        notifications: true,
+        calendar: false
+      },
       profileSet: true
     });
     this.props.navigation.navigate('NewUserInsta', {description: this.state.value, user: params.user, id: params.id});
