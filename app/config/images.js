@@ -97,6 +97,8 @@ const images = {
       }
     },
   },
+  checkboxEmpty: require('../images/uncheckbox.png'),
+  checkboxFilled: require('../images/checked.png'),
 }
 
 export default images;

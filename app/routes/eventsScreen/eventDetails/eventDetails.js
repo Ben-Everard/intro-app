@@ -1,7 +1,8 @@
 import React, { Component } from 'react'; 
-import { Dimensions, Linking, Modal, Text, TouchableHighlight, View } from 'react-native';
+import { Dimensions, Linking, Modal, Platform, Text, TouchableHighlight, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { tConvert, distanceFinder } from '../../../config/globalFunctions.js';
+import RNGooglePlaces from 'react-native-google-places';
 
 import images from '../../../config/images.js';
 import styles from './styles.js';
@@ -27,7 +28,7 @@ export default class eventDetails extends Component {
       spotsLeft: 0,
       modalVisible: false,
       member: false,
-      created: false,
+      creator: false,
       modalOption: false,
       currentId: firebase.auth().currentUser.uid
     }
@@ -38,8 +39,8 @@ export default class eventDetails extends Component {
     let currentId = firebase.auth().currentUser.uid;
     let db = firebase.firestore();
     let fieldPath = firebase.firestore.FieldPath;
-    let pathCreated = new fieldPath('created', params.eventId)
-    let pathMember = new fieldPath('joined', params.eventId)
+    let pathCreated = new fieldPath('created', params.eventId);
+    let pathMember = new fieldPath('joined', params.eventId);
 
     //Open spots
     let totalSpots = params.event.openSpots;
@@ -55,30 +56,28 @@ export default class eventDetails extends Component {
       spotsLeft: spotsLeft,
       time: tConvert(hours + ':' + minutes),
     });
-    
-    db.collection('users').where(pathCreated, '==', params.eventId).get().then(docs => {
-      if ((docs._docs).length > 0) {
+
+
+    db.collection('users').doc(currentId).get().then(docs => {
+      let data = docs._data;
+      if ((data.created).hasOwnProperty(params.eventId)) {
         this.setState({
-          creator: true,
+          creator: true
+        })
+      } else if ((data.joined).hasOwnProperty(params.eventId)) {
+        console.log('Should not be here');
+        this.setState({
           member: true
         })
-      }
-    })
-    .catch(err => {
-      console.log(err);
-    })
-
-    db.collection('users').where(pathMember, '==', params.eventId).get().then(docs => {
-      if ((docs._docs).length > 0) {
+      } else {
         this.setState({
-          member: true,
-          
+          requestButton: true
         })
       }
     })
     .catch(err => {
       console.log(err);
-    })
+    });
   }
 
   _requestJoin(params) {
@@ -140,9 +139,7 @@ export default class eventDetails extends Component {
     })
   }
 
-  _maps(params) {
-    console.log(params);
-    let url = params.event.place.mapLocation
+  _maps(url) {
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
         console.log('Can\'t handle url: ' + url);
@@ -153,10 +150,33 @@ export default class eventDetails extends Component {
     
   }
 
+  onGetPlaceByIDPress = (id) => {
+    RNGooglePlaces.lookUpPlaceByID(id)
+    .then((results) => {
+      const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+      const latLng = `${results.latitude},${results.longitude}`;
+      const label = 'Custom Label';
+      const url = Platform.select({
+        ios: `${scheme}${label}@${latLng}`,
+        android: `${scheme}${latLng}(${label})`
+      });
+      this._maps(url);
+    })
+    .catch((error) => console.log(error.message));
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     const { params } = this.props.navigation.state;
     let {height, width} = Dimensions.get('window');
+
+    (params.avatar).map(function(data, index) {
+      let imageURL = data
+      if (data.image) {
+        imageURL = data.image;
+      }
+      params.avatar[index] = imageURL;
+    })
 
     const optionsNonMember = 
       <TouchableHighlight onPress={()=>this._report()}>
@@ -171,11 +191,18 @@ export default class eventDetails extends Component {
         </View>
       </TouchableHighlight>
     const optionscreator = 
-      <TouchableHighlight onPress={()=>this._editEvent()}>
-        <View style={styles.optionButtonBottom}>
-          <Text style={styles.optionButtonsText}>Edit Event</Text>
-        </View>
-      </TouchableHighlight>
+      <View>
+        <TouchableHighlight onPress={()=>this._editEvent()}>
+          <View style={styles.optionButtonBottom}>
+            <Text style={styles.optionButtonsText}>Edit Event</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={()=>this._editEvent()}>
+          <View style={styles.optionButtonBottom}>
+            <Text style={styles.optionButtonsText}>Remove Event</Text>
+          </View>
+        </TouchableHighlight>
+      </View>
     const optionsCancel = 
     <TouchableHighlight onPress={()=>this._modalOption()}>
       <View style={styles.optionButtonCancel}>
@@ -185,43 +212,43 @@ export default class eventDetails extends Component {
 
     const backAction = NavigationActions.back({
       key: null
-    })
+    });
+
     return (
       <View style={styles.container}>
         <StatusBar />
-        <CustomNav onPress={()=>this.props.navigation.dispatch(backAction)} text={'BACK TO RESULTS'} />
+        <CustomNav onPress={()=>this.props.navigation.dispatch(backAction)} text={'BACK TO RESULTS'} left={true}/>
         <View style={styles.event}>
           <View>
-            <EventImage image={params.event.image} avatar={params.avatar}/>
+            <EventImage image={params.event.image} avatar={params.avatar} event={params.event} clickable={true} height={96} onPress={() => this.props.navigation.navigate('MemberDetails', {avatar: params.avatar, event: params.event})}/>
             <Option onPress={()=>this._modalOption()}/>
           </View>
         </View>
         <View style={styles.fullDescription}>
-          <Title title={params.event.event}/>
+          <Title title={params.event.event} size={true}/>
           <View style={styles.iconsMargin}>
             <EventIcons style={styles.iconsMargin} people={this.state.spotsLeft} eventType={params.event.eventType} time={this.state.time} currentLat={params.states.currentLat} currentLong={params.states.currentLong} destinationLat={params.event.place.geo.lat} destinationLong={params.event.place.geo.long}/>
           </View>
           <Description style={styles.description} description={params.event.description} />
         </View>
         <View style={styles.mapLocation}>
-          <EventLocation name={params.event.place.name} address={params.event.place.formatedLocation} onPress={()=>this._maps(params)}/>
-          <View style={styles.button}>
-            <Button text={'Request'} onPress={()=>this._requestJoin(params)}/>
-          </View>
+          <EventLocation name={params.event.place.name} address={params.event.place.formatedLocation} onPress={() => this.onGetPlaceByIDPress(params.event.place.placeId)}/>
+          { this.state.requestButton &&
+            <View style={styles.button}>
+              <Button text={'Request'} onPress={()=>this._requestJoin(params)}/>
+            </View> 
+          }
         </View>
         <Modal
           visible={this.state.modalVisible}
-          transparent={true}
-        >
+          transparent={true} >
           <View 
             style={{
               flex: 1,
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'rgba(0, 0, 0, 0.2)',
-            }}
-          >
+              backgroundColor: 'rgba(0, 0, 0, 0.2)' }} >
             <View style={styles.requestModal}>
               <Text>Sent!</Text>
               <Text>You will get an alert once you have been accepted!</Text>
@@ -233,8 +260,7 @@ export default class eventDetails extends Component {
         </Modal>
         <Modal
           visible={this.state.modalOption}
-          transparent={true}
-        >
+          transparent={true} >
           <View style={{
             flex: 1,
             flexDirection: 'column',
@@ -243,13 +269,10 @@ export default class eventDetails extends Component {
             backgroundColor: 'rgba(0, 0, 0, 0.2)',
             opacity: 1,
             height: height,
-            width: width
-          }}>
+            width: width }} >
             <View style={{
               position: 'absolute',
-              bottom: 0,
-              
-            }}>
+              bottom: 0 }} >
               { this.state.member ? null : optionsNonMember }
               { this.state.member ? optionsMember : null }
               { this.state.creator ? optionscreator : null }

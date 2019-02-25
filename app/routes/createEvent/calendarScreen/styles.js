@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
     
   },
   text: {
-    marginTop: 10,
-    marginBottom: 10,
+    lineHeight: 20,
     marginLeft: 8,
     width: 61,
     marginRight: 31

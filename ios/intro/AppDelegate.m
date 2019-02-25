@@ -36,6 +36,7 @@
   [self.window makeKeyAndVisible];
   
   [GMSPlacesClient provideAPIKey:@"AIzaSyAXV-KWy4tbJa_ZpAFwiB1tiyDSTBChi2U"];
+  [GMSServices provideAPIKey:@"AIzaSyDYarzNeHufgzf76YPiLOINCtmHuQPWp3A"];
   
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];

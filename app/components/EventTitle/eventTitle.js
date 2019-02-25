@@ -6,7 +6,7 @@ import styles from './styles.js';
 export default class eventTitle extends Component {
   render() {
     return (
-      <Text style={styles.title}>{this.props.title}</Text>
+      <Text style={this.props.size ? styles.titleBig : styles.title}>{this.props.title}</Text>
     )
   }
 }

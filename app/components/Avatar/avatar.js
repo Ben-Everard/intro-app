@@ -12,7 +12,17 @@ export default class avatar extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.avatarUpdate();
+    }
+  }
+
   componentDidMount() {
+    this.avatarUpdate();
+  }
+
+  avatarUpdate() {
     let avatar = [];
     avatar.push(
       <Image
@@ -25,14 +35,22 @@ export default class avatar extends Component {
     this.setState({
       avatars: avatar
     });
-
     if ( this.props.images && (this.props.images).length > 0) {
       (this.props.images).forEach((image, i) => {
+        let imageURL = image;
+        let styleUpdate = {width: 45, height: 45, borderRadius: 22,borderWidth: 2, borderColor: '#F99266', left: -35, zIndex: 100,}
+
+        if (i === 0) {
+          styleUpdate = {width: 45, height: 45, borderRadius: 22,borderWidth: 2, borderColor: '#F99266', left: -15, zIndex: 100,}
+        }
+        if (image.image) {
+          imageURL = image.image;
+        }
         avatar.push(
           <Image
             key={i}
-            style={styles[i]}
-            source={{url: image}}
+            style={image.active === true ? styleUpdate : styles[i]}
+            source={{url: imageURL}}
           />
         );
       });

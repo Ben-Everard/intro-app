@@ -13,10 +13,19 @@ export default class button extends Component {
   }
 
   render() {
-    return (
-      <TouchableHighlight style={styles.button} onPress={this.props.onPress} disabled={this.props.disabled}>
-        <Text style={styles.buttonText}>{this.props.text}</Text>
-      </TouchableHighlight>
-    )
+    if (this.props.white === 'true') {
+      return (
+        <TouchableHighlight style={styles.buttonWhite} onPress={this.props.onPress} disabled={this.props.disabled}>
+          <Text style={styles.buttonTextWhite}>{this.props.text}</Text>
+        </TouchableHighlight>
+      ) 
+    } else  {
+        return (
+          <TouchableHighlight style={styles.button} onPress={this.props.onPress} disabled={this.props.disabled}>
+            <Text style={styles.buttonText}>{this.props.text}</Text>
+          </TouchableHighlight>
+        )
+    }
+    
   }
 }

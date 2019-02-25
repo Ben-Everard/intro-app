@@ -10,6 +10,18 @@ const styles = StyleSheet.create ({
   buttonText: {
     color: '#FFF',
     textAlign: 'center'
+  },
+  buttonWhite: {
+    backgroundColor: '#FFF',
+    paddingTop: 12,
+    paddingBottom: 12,
+    borderRadius: 5,
+    borderColor: '#FF265C',
+    borderWidth: 1
+  },
+  buttonTextWhite: {
+    color: '#FF265C',
+    textAlign: 'center'
   }
 });
 

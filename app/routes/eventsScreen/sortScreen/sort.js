@@ -1,10 +1,6 @@
 import React, { Component } from 'React';
-import {
-  Slider,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { Slider, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import CheckBox from 'react-native-checkbox';
 
 import styles from './styles.js';
 import CustomMarker from './customMarker.js';
@@ -12,9 +8,10 @@ import images from '../../../config/images.js';
 
 import StatusBar from '../../../components/StatusBar';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import Button from '../../../components/Button';
 
 export default class SortScreen extends Component {
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.state={
       time: [0, 5],
@@ -25,7 +22,16 @@ export default class SortScreen extends Component {
   static navigationOptions = {
     tabBarVisible: false,
   };
+
+  sortEvents() {
+    console.log('Click on Sort', this.state);
+  }
+
+
+
+
   render() {
+    const checkBoxList = ['Game Time', 'Outside', 'Drinks', 'Live Music', 'Girls Night', 'Coffee', 'Guys Night', 'Other'];
     return (
       <View style={styles.container}>
         <StatusBar />
@@ -66,7 +72,7 @@ export default class SortScreen extends Component {
                 max={8}
                 step={1} 
                 customMarker={CustomMarker}
-                trackStyle={images.slider.progress}
+                selectedStyle={{backgroundColor: '#FFB400'}}
               />
             </View>
           </View>
@@ -84,9 +90,94 @@ export default class SortScreen extends Component {
                 max={5}
                 step={1} 
                 customMarker={CustomMarker}
-                trackStyle={images.slider.progress}
+                selectedStyle={{backgroundColor: '#FFB400'}}
               />
             </View>
+          </View>
+          <View style={styles.checkboxArea}>
+            <View style={styles.checkbox}>
+              <CheckBox 
+                label='Game Time'
+                labelStyle={styles.checkboxLabel}
+                checked={this.state.checkedGameTime}
+                uncheckedImage={images.checkboxEmpty}
+                checkedImage={images.checkboxFilled}
+                onChange={(checked) => this.setState({checkedGameTime: !this.state.checkedGameTime}) }
+              />
+            </View>
+            <View style={styles.checkbox}>
+              <CheckBox 
+                label='Outside'
+                labelStyle={styles.checkboxLabel}
+                checked={this.state.checkedOutSide}
+                uncheckedImage={images.checkboxEmpty}
+                checkedImage={images.checkboxFilled}
+                onChange={(checked) => this.setState({checkedOutSide: !this.state.checkedOutSide}) }
+              />
+            </View>
+            <View style={styles.checkbox}>
+              <CheckBox 
+                label='Drinks'
+                labelStyle={styles.checkboxLabel}
+                checked={this.state.checkedDrinks}
+                uncheckedImage={images.checkboxEmpty}
+                checkedImage={images.checkboxFilled}
+                onChange={(checked) => this.setState({checkedDrinks: !this.state.checkedDrinks}) }
+              />
+            </View>
+            <View style={styles.checkbox}>
+              <CheckBox 
+                label='Live Music'
+                labelStyle={styles.checkboxLabel}
+                checked={this.state.checkedLiveMusic}
+                uncheckedImage={images.checkboxEmpty}
+                checkedImage={images.checkboxFilled}
+                onChange={(checked) => this.setState({checkedLiveMusic: !this.state.checkedLiveMusic}) }
+              />
+            </View>
+            <View style={styles.checkbox}>
+              <CheckBox 
+                label='Girls Night'
+                labelStyle={styles.checkboxLabel}
+                checked={this.state.checkedGirlsNight}
+                uncheckedImage={images.checkboxEmpty}
+                checkedImage={images.checkboxFilled}
+                onChange={(checked) => this.setState({checkedGirlsNight: !this.state.checkedGirlsNight}) }
+              />
+            </View>
+            <View style={styles.checkbox}>
+              <CheckBox 
+                label='Coffee'
+                labelStyle={styles.checkboxLabel}
+                checked={this.state.checkedCoffee}
+                uncheckedImage={images.checkboxEmpty}
+                checkedImage={images.checkboxFilled}
+                onChange={(checked) => this.setState({checkedCoffee: !this.state.checkedCoffee}) }
+              />
+            </View>
+            <View style={styles.checkbox}>
+              <CheckBox 
+                label='Guys Night'
+                labelStyle={styles.checkboxLabel}
+                checked={this.state.checkedGuysNight}
+                uncheckedImage={images.checkboxEmpty}
+                checkedImage={images.checkboxFilled}
+                onChange={(checked) => this.setState({checkedGuysNight: !this.state.checkedGuysNight}) }
+              />
+            </View>
+            <View style={styles.checkbox}>
+              <CheckBox 
+                label='Other'
+                labelStyle={styles.checkboxLabel}
+                checked={this.state.checkedOther}
+                uncheckedImage={images.checkboxEmpty}
+                checkedImage={images.checkboxFilled}
+                onChange={(checked) => this.setState({checkedOther: !this.state.checkedOther}) }
+              />
+            </View>
+          </View>
+          <View style={styles.button}>
+            <Button text={'Sort'} onPress={() => this.sortEvents()}/>
           </View>
         </View>
       </View>

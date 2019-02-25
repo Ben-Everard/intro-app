@@ -21,7 +21,6 @@ export default class newUser extends Component {
 
   componentDidMount() {
     const { navigate } = this.props.navigation;
-    console.log(this.state.user);
     if (!this.state.user.instagramSet && (this.state.user.description !== '') ) {
       this.props.navigation.navigate('NewUserInsta', {description: this.state.user.description, user: this.state.user});
     }

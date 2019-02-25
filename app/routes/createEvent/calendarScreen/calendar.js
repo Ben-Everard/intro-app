@@ -26,6 +26,7 @@ export default class CalendarsScreen extends Component {
 
     this.state = {
       date: this.props.date,
+      maxDate: addDays(new Date(), 14),
       timeZoneOffsetInHours: this.props.timeZoneOffsetInHours,
       modalVisiblePeople: false,
       modalVisibleDate: false,
@@ -108,17 +109,18 @@ export default class CalendarsScreen extends Component {
           onDayPress={this.onDayPress}
           style={styles.calendar}
           minDate={this.state.date}
+          maxDate={this.state.maxDate}
           current={this.state.selected}
           markedDates={{
-            [this.state.selected]: {selected: true, marked: true}
+            [this.state.selected]: {selected: true,}
           }}
           theme={{
             selectedDayBackgroundColor: '#FFB400',
             'stylesheet.day.basic': {
               base: {
-                width: 25,
-                height: 25,
-                alignItems: 'center'
+                width: 30,
+                height: 30,
+                alignItems: 'center',
               }
             }
           }}
@@ -221,4 +223,8 @@ export default class CalendarsScreen extends Component {
       </ScrollView>
     );
   }
+}
+
+function addDays(dateObj, numDays) {
+  return dateObj.setDate(dateObj.getDate() + numDays);
 }

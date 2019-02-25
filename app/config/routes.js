@@ -20,7 +20,9 @@ import NewUserInsta from '../routes/accountSetup/newUserInsta/';
 
 import HomeScreen from '../routes/eventsScreen/homeScreen/';
 import EventDetails from '../routes/eventsScreen/eventDetails/';
+// import FilterScreen from '../routes/eventsScreen/filterScreen';
 import SortScreen from '../routes/eventsScreen/sortScreen/';
+import MemberProfiles from '../routes/eventsScreen/memberProfiles/';
 
 import EventCalendar from '../routes/createEvent/calendarScreen/';
 import EventCategory from '../routes/createEvent/categoryScreen/';
@@ -31,6 +33,7 @@ import AccountHome from '../routes/accountProfile/accountHome/';
 import AccountSettings from '../routes/accountProfile/accountSettings/';
 import UpdateProfile from '../routes/accountProfile/updateProfile/';
 import AccountLegal from '../routes/accountProfile/accountLegal/';
+import AccountHistory from '../routes/accountProfile/accountHistory/';
 
 import MessageDashBoard from '../routes/messages/messageDashBoard/';
 
@@ -95,6 +98,12 @@ export const AccountStack = StackNavigator({
       header: null
     },
   },
+  AccountHistory: {
+    screen: AccountHistory,
+    navigationOptions: {
+      header: null
+    },
+  }
 })
 
 export const HomeStack = StackNavigator({
@@ -109,16 +118,16 @@ export const HomeStack = StackNavigator({
     navigationOptions: { 
       header: null,
     },
+  },
+  MemberDetails: {
+    screen: MemberProfiles,
+    navigationOptions: {
+      header: null,
+    }
   }
 })
 
 export const ModalStack = StackNavigator({
-  AllEvents: {
-    screen: HomeStack,
-    navigationOptions: { 
-      header: null,
-    },
-  },
   SortScreen: {
     screen: SortScreen,
     navigationOptions: { 
@@ -132,7 +141,7 @@ export const ModalStack = StackNavigator({
 
 export const Tabs = TabNavigator({
   HomeScreen: {
-    screen: HomeScreen,
+    screen: HomeStack,
     navigationOptions:({navigation}) =>({
       tabBarIcon: ({ tintColor }) => (
         <Image
@@ -141,7 +150,7 @@ export const Tabs = TabNavigator({
       ),
     })
   },
-  Sort: {
+  Fliter: {
     screen: AccountStack,
     navigationOptions:({navigation}) =>({
       tabBarIcon: ({ tintColor }) => (
@@ -239,6 +248,12 @@ export const RootStack = StackNavigator({
   },
   HomeScreen: {
     screen: Tabs,
+    navigationOptions: {
+      header: null
+    }
+  },
+  SortScreen: {
+    screen: ModalStack,
     navigationOptions: {
       header: null
     }

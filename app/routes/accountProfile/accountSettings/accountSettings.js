@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
-import {
-  Image,
-  ScrollView,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
+
 import { StackActions, NavigationActions } from 'react-navigation';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { LoginManager } from 'react-native-fbsdk';
-
 import firebase from 'react-native-firebase';
-
 import styles from './styles.js';
 import images from '../../../config/images.js';
 import StatusBar from '../../../components/StatusBar/';
@@ -56,14 +48,16 @@ export default class accountSettings extends Component {
     })
   }
 
-  logout(action) {
-    firebase.auth().signOut();
+  async logout(action) {
     LoginManager.logOut();
-    this.props.navigation.dispatch(action);
+    firebase.auth().signOut().then(function(action) {
+      this.props.navigation.dispatch(action);
+    }).catch(function(error) {
+      console.log(error);
+    });
   }
 
   render() {
-    this.saveSettings();
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
@@ -91,8 +85,10 @@ export default class accountSettings extends Component {
               min={18}
               max={50}
               step={1} 
-              // customMarker={images.slider.handle}
-              // trackStyle={images.slider.progress}
+              style={{
+                marker: images.slider.handle,
+                track: images.slider.progress
+              }}
             />
           </View>
         </View>

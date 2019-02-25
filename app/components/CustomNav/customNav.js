@@ -19,7 +19,7 @@ export default class customNav extends Component {
             >
             <View style={styles.textArrow}>
               <Image
-                source={this.props.text === 'BACK TO RESULTS' ? images.arrowLeft : images.arrowDown }
+                source={this.props.left === true ? images.arrowLeft : images.arrowDown }
               />
               <Text style={styles.text}>
                 {this.props.text}
